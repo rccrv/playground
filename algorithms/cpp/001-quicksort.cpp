@@ -5,7 +5,7 @@
 
 // TODO: I mainly converted this from an old C code that I had.
 //       I probably should redesign part and quicksort using iterators instead
-//       of rellying on indexes and make this whole code more C++er.
+//       of rellying on indexes and make this hole code more C++er.
 int part(std::vector<int> &a, int start, int end) {
   int pivot = end;
   int j = start;
