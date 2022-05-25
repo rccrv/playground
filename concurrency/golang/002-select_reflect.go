@@ -1,3 +1,5 @@
+// Start n (with n between [10, 32]) goroutines and process random pings from
+// these goroutines.
 package main
 
 import (

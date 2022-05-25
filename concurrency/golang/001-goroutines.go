@@ -1,3 +1,4 @@
+// Starts 3 goroutines and process random pings from these goroutines.
 package main
 
 import (

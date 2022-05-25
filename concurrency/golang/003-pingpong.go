@@ -1,3 +1,6 @@
+// Start n (with n between [5,16]) producers and consumers. A consumer answers
+// random pings from its associated producer. After ansering 10 pings, quit
+// the main goroutine.
 package main
 
 import (
