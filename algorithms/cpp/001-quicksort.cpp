@@ -1,16 +1,16 @@
 #include <algorithm>
+#include <array>
 #include <iostream>
 #include <random>
+#include <span>
+#include <tuple>
 #include <vector>
 
-// TODO: I mainly converted this from an old C code that I had.
-//       I probably should redesign part and quicksort using iterators instead
-//       of rellying on indexes and make this code more C++er.
-int part(std::vector<int> &a, int start, int end) {
-  int pivot = end;
-  int j = start;
+std::tuple<std::span<int>, std::span<int>> part(std::span<int> &a) {
+  int pivot = a.size() - 1;
+  int j = 0;
 
-  for (int i = start; i < end; i++) {
+  for (int i = 0; i < a.size(); i++) {
     if (a[i] < a[pivot]) {
       std::swap(a[i], a[j]);
       j++;
@@ -18,17 +18,17 @@ int part(std::vector<int> &a, int start, int end) {
   }
 
   std::swap(a[j], a[pivot]);
+  std::span<int> n1{a.data(), a.data() + j};
+  std::span<int> n2{a.data() + j + 1, a.data() + a.size()};
 
-  return j;
+  return std::make_tuple(n1, n2);
 }
 
-void quicksort(std::vector<int> &a, int start, int end) {
-  int p = 0;
-
-  if (start < end) {
-    p = part(a, start, end);
-    quicksort(a, start, p - 1);
-    quicksort(a, p + 1, end);
+void quicksort(std::span<int> &a) {
+  if (a.size() > 1) {
+    auto [p1, p2] = part(a);
+    quicksort(p1);
+    quicksort(p2);
   }
 }
 
@@ -40,11 +40,11 @@ int main(void) {
   std::uniform_int_distribution<int> distrib_elements(1, 100);
 
   auto print_a = [&]() {
-    std::cout << "a: ";
+    std::cout << "[";
     for (int i = 0; i < a.size(); i++) {
-      std::cout << a[i] << " ";
+      std::cout << a[i] << (i + 1 < a.size() ? ", " : "");
     }
-    std::cout << '\n';
+    std::cout << "]\n";
   };
 
   auto generate_a = [&]() {
@@ -56,7 +56,8 @@ int main(void) {
 
   generate_a();
   print_a();
-  quicksort(a, 0, a.size() - 1);
+  std::span<int> s{a.data(), a.size()};
+  quicksort(s);
   print_a();
 
   return 0;
