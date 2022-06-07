@@ -1,5 +1,5 @@
 // Start n (with n between [5,10]) producers and k (with k between [5,16])
-// consumers. A consumer answers random pings from producers. After ansering
+// consumers. A consumer answers random pings from producers. After answering
 // 10 pings, quit the main goroutine.
 package main
 
