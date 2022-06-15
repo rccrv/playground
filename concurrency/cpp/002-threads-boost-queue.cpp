@@ -1,12 +1,11 @@
 #include <boost/lockfree/policies.hpp>
+#include <boost/lockfree/queue.hpp>
 #include <chrono>
-#include <condition_variable>
 #include <iostream>
 #include <memory>
-#include <mutex>
 #include <random>
 #include <thread>
-#include <boost/lockfree/queue.hpp>
+#include <vector>
 
 void f(int n, boost::lockfree::queue<int> &q) {
   std::random_device rd;
@@ -22,20 +21,20 @@ void f(int n, boost::lockfree::queue<int> &q) {
 
 int main(void) {
   boost::lockfree::queue<int> q{50};
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<> distrib_size(10, 32);
+  std::vector<std::thread> t;
   int v = 0;
 
   std::cout << "This is main()" << '\n';
+  v = distrib_size(gen);
 
-  std::cout << "Starting thread f1()" << '\n';
-  auto t1 = std::thread(f, 1, std::ref(q));
-  std::cout << "Starting thread f2()" << '\n';
-  auto t2 = std::thread(f, 2, std::ref(q));
-  std::cout << "Starting thread f3()" << '\n';
-  auto t3 = std::thread(f, 3, std::ref(q));
-
-  t1.detach();
-  t2.detach();
-  t3.detach();
+  for (int i = 0; i < v; i++) {
+    std::cout << "Starting thread f" << i << "()" << '\n';
+    t.push_back(std::thread(f, i + 1, std::ref(q)));
+    t.back().detach();
+  }
 
   while (1) {
     while (q.pop(v)) {
