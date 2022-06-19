@@ -73,7 +73,7 @@ void consumer(int n, queue &q, std::atomic_flag &receiver,
 int main(void) {
   std::random_device rd;
   std::mt19937 gen(rd());
-  std::uniform_int_distribution<> distrib(5, 16);
+  std::uniform_int_distribution distrib(5, 16);
   std::atomic_flag end = ATOMIC_FLAG_INIT;
   int r;
   int counter;

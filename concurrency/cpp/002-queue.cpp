@@ -37,7 +37,7 @@ struct queue {
 void f(int n, queue &q) {
   std::random_device rd;
   std::mt19937 gen(rd());
-  std::uniform_int_distribution<> distrib(1, 6);
+  std::uniform_int_distribution distrib(1, 6);
 
   while (1) {
     std::this_thread::sleep_for(std::chrono::seconds(distrib(gen)));
