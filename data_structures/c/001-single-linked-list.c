@@ -13,7 +13,7 @@ struct list {
 };
 
 struct list *list_initialize() {
-  struct list *r = (struct list *) calloc(1, sizeof(struct list));
+  struct list *r = (struct list *)calloc(1, sizeof(struct list));
 
   return r;
 }
@@ -30,7 +30,7 @@ void print_list(struct list *l) {
 }
 
 void list_insert_front(struct list *l, int d) {
-  struct node *new = (struct node *) calloc(1, sizeof(struct node));;
+  struct node *new = (struct node *)calloc(1, sizeof(struct node));
 
   new->d = d;
   new->n = l->l;
@@ -39,21 +39,25 @@ void list_insert_front(struct list *l, int d) {
 }
 
 void list_insert_back(struct list *l, int d) {
-  struct node *new = (struct node *) calloc(1, sizeof(struct node));
+  struct node *new = (struct node *)calloc(1, sizeof(struct node));
 
   new->d = d;
   new->n = NULL;
 
   if (l->l) {
     struct node *second_to_last;
+
     second_to_last = l->l;
+
     while (second_to_last->n) {
       second_to_last = second_to_last->n;
     }
+
     second_to_last->n = new;
   } else {
     l->l = new;
   }
+
   l->nelem += 1;
 }
 
@@ -64,13 +68,14 @@ void list_remove_front(struct list *l) {
     l->l = delete->n;
 
     free(delete);
-    l->nelem-= 1;
+    l->nelem -= 1;
   }
 }
 
 void list_remove_back(struct list *l) {
   if (l->l) {
     struct node *second_to_last, *last, *delete;
+
     second_to_last = l->l;
     last = second_to_last->n;
     if (last) {
@@ -78,15 +83,20 @@ void list_remove_back(struct list *l) {
         second_to_last = second_to_last->n;
         last = second_to_last->n;
       }
+
       delete = last;
       second_to_last->n = NULL;
+
       free(delete);
     } else {
       delete = second_to_last;
+
       free(delete);
+
       l->l = NULL;
     }
-    l->nelem-= 1;
+
+    l->nelem -= 1;
   }
 }
 

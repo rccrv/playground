@@ -82,9 +82,10 @@ int queue_remove(struct queue *q) {
   if (q->elements == 0) {
     pthread_cond_wait(&(q->has_element), &(q->m_has_element));
   }
-  int r = queue_front(q);
 
   pthread_mutex_lock(&(q->m));
+  int r = queue_front(q);
+
   shift_v(q->v, q->capacity, -1);
   q->elements -= 1;
   pthread_mutex_unlock(&(q->m));
