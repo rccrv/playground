@@ -1,9 +1,11 @@
+package com.github.com.rccrv.playground.algorithms;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-class Quicksort {
+public class Quicksort {
     record Pair<F, S> (F first, S second) {
     }
 
